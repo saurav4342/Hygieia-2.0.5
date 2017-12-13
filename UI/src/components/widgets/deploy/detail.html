@@ -1,0 +1,60 @@
+<widget-modal widget-modal-close="true">
+    <div class="widget-detail deploy-detail">
+        <div class="widget-detail-heading">
+            <div class="row">
+                <div class="col-md-5">
+                    <span class="dash-status-lg"
+                          dash-status="{{detail.environment.failedComponents > 0 ? 
+                        	(detail.environment.ignoreFailure? detail.statuses.IGNORE : detail.statuses.FAIL) : detail.statuses.PASS}}"
+                          dash-status-fail-text="{{detail.environment.failedComponents}}"
+                          dash-status-ignore-text="{{detail.environment.failedComponents}}"></span>
+                    <span class="environment-name">{{::detail.environment.name}}({{::detail.environment.units[0].application}})</span>
+                </div>
+
+                <div class="col-md-4 last-updated">
+                    <span>Last Deployed on: {{::detail.environment.units[0].lastUpdated | date:'MMM d, HH:mm:ss'}}</span>
+                </div>
+
+               
+                <div class="col-md-3 view-in-tool">
+                    
+                        Version: {{::detail.environment.units[0].version }}
+                    
+                </div>
+            </div>
+
+            <!-- Close button -->
+        </div>
+        <div class="widget-detail-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2">Ansible Component status</th>
+                        <th>Last Updated</th>
+                        <th colspan="2">ServerCount</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="unit in detail.environment.units | orderBy:['deployed', 'name'] track by $index">
+                    <tr>
+                        <td dash-status="{{unit.ansibleComponentStatus? detail.statuses.PASS : detail.statuses.FAIL}}"></td>
+                        <td ng-if="!unit.jobUrl">{{::unit.name}}</td>
+                        <td>{{::unit.ansiblelastReported | date:'MMM d, HH:mm:ss' | timezone:'+0530'}}</td>
+						<td>{{::unit.serverCount}}</td>
+                    </tr>
+                    <tr ng-if="!unit.servers || unit.servers.length === 0">
+                        <td dash-status="{{unit.deployed? detail.statuses.PASS : (detail.environment.ignoreFailure? detail.statuses.IGNORE : detail.statuses.FAIL)}}"></td>
+                        <td ng-if="unit.jobUrl">
+                            <a ng-href="{{::unit.jobUrl}}" target="_blank">
+                                {{::unit.name}} <span class="fa fa-angle-right"></span>
+                            </a>
+                        </td>
+                        <td ng-if="!unit.jobUrl">{{::unit.name}}</td>
+                        <td>{{::unit.lastUpdated | date:'MMM d, HH:mm:ss'}}</td>
+                        <td>{{::unit.version}}</td>
+                        <td colspan="2">N/A</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</widget-modal>

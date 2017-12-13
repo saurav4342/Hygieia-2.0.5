@@ -1,0 +1,267 @@
+<widget-modal widget-modal-close="true" class="modal-feature" >
+    <div class="widget-detail deploy-detail">
+        <div class="widget-detail-heading">
+            <div class="modal-heading">{{detail.featureType}}</div>
+
+            <!-- Close button -->
+        </div>
+        <div class="widget-detail-body">
+           
+            <!--tab markup start-->
+            <div ng-cloak="" class="tabsdemoDynamicHeight" ng-app="MyApp">
+                <!-- tab area for defects -->
+                <md-content ng-show="detail.featureType=='defect'">
+                  <md-tabs md-dynamic-height="" md-border-bottom="">
+                        <md-tab label="State(TB)">
+                                <md-content class="md-padding">
+                                  <h1 class="md-display-2">Defects By State for TargetBuild v{{detail.release}}</h1>
+                                  <table class="table table-bordered table-striped">
+                                      <thead class="thead-inverse">
+                                          <tr>
+                                              <th style="padding-left:5px">Team</th>
+                                              <th style="padding-left:5px">Open</th>
+                                              <th style="padding-left:5px">Closed</th>
+                                              <th style="padding-left:5px">Fixed</th>
+                                              <th style="padding-left:5px">Submitted</th>
+                                              <th style="padding-left:5px">Blank</th>
+                                              <th style="padding-left:5px">Total</th>
+                                          </tr>
+                                      </thead>
+                                      <tfoot>
+                                          <tr>
+                                              <td>Total</td>
+                                              <td>{{detail.totalObject.totalOpen}}</td>
+                                              <td>{{detail.totalObject.totalClosed}}</td>
+                                              <td>{{detail.totalObject.totalFixed}}</td>
+                                              <td>{{detail.totalObject.totalSubmitted}}</td>
+                                              <td>{{detail.totalObject.totalBlank}}</td>
+                                              <td>{{detail.totalObject.totalOpen+detail.totalObject.totalClosed+detail.totalObject.totalFixed+detail.totalObject.totalSubmitted+detail.totalObject.totalBlank}}</td>
+                                          </tr>
+                                      </tfoot>
+                                      <tbody>
+                                          <tr ng-repeat="team in detail.feature" ng-hide="team.defectData.total==0">
+                                              <td>{{team.team}}</td>
+                                              <td style="padding-right:15px;padding-left:5px">{{team.defectData.open}}</td>
+                                              <td style="padding-right:15px;padding-left:5px">{{team.defectData.closed}}</td>
+                                              <td style="padding-right:15px;padding-left:5px">{{team.defectData.fixed}}</td>
+                                              <td style="padding-right:15px;padding-left:5px">{{team.defectData.submitted}}</td>
+                                              <td style="padding-right:15px;padding-left:5px">{{team.defectData.noState}}</td>
+                                              <td style="padding-left:5px;" class="total-coloumn">{{team.defectData.total}}</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                </md-content>
+                              </md-tab>
+                    <md-tab label="Priority(TB)">
+                      <md-content class="md-padding">
+                        <h1 class="md-display-2">Defects By Priority with Target Build v{{detail.release}}</h1>
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th style="padding-left:5px">Team</th>
+                                    <th style="padding-left:5px">P1</th>
+                                    <th style="padding-left:5px">P2</th>
+                                    <th style="padding-left:5px">P3</th>
+                                    <th style="padding-left:5px">P4</th>
+                                    <th style="padding-left:5px">Blank</th>
+                                    <th style="padding-left:5px">Total</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>{{detail.totalObject.totalp1}}</td>
+                                    <td>{{detail.totalObject.totalp2}}</td>
+                                    <td>{{detail.totalObject.totalp3}}</td>
+                                    <td>{{detail.totalObject.totalp4}}</td>
+                                    <td>{{detail.totalObject.totalBlankPriority}}</td>
+                                    <td>{{detail.totalObject.totalp1+detail.totalObject.totalp2+detail.totalObject.totalp3+detail.totalObject.totalp4+detail.totalObject.totalBlankPriority}}</td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr ng-repeat="team in detail.feature" ng-hide="team.defectData.total==0">
+                                    <td>{{team.team}}</td>
+                                    <td style="padding-right:15px;padding-left:5px">{{team.defectData.p1}}</td>
+                                    <td style="padding-right:15px;padding-left:5px">{{team.defectData.p2}}</td>
+                                    <td style="padding-right:15px;padding-left:5px">{{team.defectData.p3}}</td>
+                                    <td style="padding-right:15px;padding-left:5px">{{team.defectData.p4}}</td>
+                                    <td style="padding-right:15px;padding-left:5px">{{team.defectData.noPriority}}</td>
+                                    <td style="padding-left:5px ;" class="total-coloumn">{{team.defectData.total}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </md-content>
+                    </md-tab>
+               
+                    <md-tab label="State(FB)">
+                      <md-content class="md-padding">
+                        <h1 class="md-display-2">Defects Found in v{{detail.release}} by State </h1>
+                        <table class="table table-bordered table-striped">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th style="padding-left:5px">Team</th>
+                                        <th style="padding-left:5px">Open</th>
+                                        <th style="padding-left:5px">Closed</th>
+                                        <th style="padding-left:5px">Fixed</th>
+                                        <th style="padding-left:5px">Submitted</th>
+                                        <th style="padding-left:5px">Total</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td>{{detail.totalObject.totalDefOpen}}</td>
+                                        <td>{{detail.totalObject.totalDefClosed}}</td>
+                                        <td>{{detail.totalObject.totalDefFixed}}</td>
+                                        <td>{{detail.totalObject.totalDefSubmitted}}</td>
+                                       <td>{{detail.totalObject.totalDefOpen+detail.totalObject.totalDefClosed+detail.totalObject.totalDefFixed+detail.totalObject.totalDefSubmitted+detail.totalObject.totalDefBlank}}</td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr ng-repeat="team in detail.feature" ng-hide="team.defectData.deferredTotal==0">
+                                        <td>{{team.team}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.defectData.deferredOpen}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.defectData.deferredClosed}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.defectData.deferredFixed}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.defectData.deferredSubmitted}}</td>
+                                       
+                                        <td style="padding-left:5px;" class="total-coloumn">{{team.defectData.deferredTotal}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                      </md-content>
+                    </md-tab>
+                    <md-tab label="Priority(FB)">
+                            <md-content class="md-padding">
+                              <h1 class="md-display-2">Defects Found in v{{detail.release}} by Priority</h1>
+                              <table class="table table-bordered table-striped">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th style="padding-left:5px">Team</th>
+                                            <th style="padding-left:5px">P1</th>
+                                            <th style="padding-left:5px">P2</th>
+                                            <th style="padding-left:5px">P3</th>
+                                            <th style="padding-left:5px">P4</th>
+                                            <th style="padding-left:5px">Blank</th>
+                                            <th style="padding-left:5px">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td>{{detail.totalObject.totalDp1}}</td>
+                                            <td>{{detail.totalObject.totalDp2}}</td>
+                                            <td>{{detail.totalObject.totalDp3}}</td>
+                                            <td>{{detail.totalObject.totalDp4}}</td>
+                                            <td>{{detail.totalObject.totalDpn}}</td>
+                                            <td>{{detail.totalObject.totalDp1+detail.totalObject.totalDp2+detail.totalObject.totalDp3+detail.totalObject.totalDp4+detail.totalObject.totalDpn}}</td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr ng-repeat="team in detail.feature" ng-hide="team.defectData.deferredTotal==0">
+                                            <td>{{team.team}}</td>
+                                            <td style="padding-right:15px;padding-left:5px">{{team.defectData.dp1}}</td>
+                                            <td style="padding-right:15px;padding-left:5px">{{team.defectData.dp2}}</td>
+                                            <td style="padding-right:15px;padding-left:5px">{{team.defectData.dp3}}</td>
+                                            <td style="padding-right:15px;padding-left:5px">{{team.defectData.dp4}}</td>
+                                            <td style="padding-right:15px;padding-left:5px">{{team.defectData.dpnone}}</td>
+                                            <td style="padding-left:5px ;" class="total-coloumn">{{team.defectData.deferredTotal}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </md-content>
+                          </md-tab>
+                          <md-tab label="Defects By Date">
+                                <md-content class="md-padding">
+                                  <h1 class="md-display-2">Trend of defects Submitted  by Date</h1>
+                                <div class="chart" ng-init="detail.showChart()">
+                                <canvas id="myChart" ></canvas>
+                            
+                                </div>
+
+                                
+                                </md-content>
+                              </md-tab>
+                              <md-tab label="Deferred">
+                                    <md-content class="md-padding">
+                                      <h1 class="md-display-2">Trend of Deferred defects by Team</h1>
+                                    <div class="chart" ng-init="detail.showDChart()">
+                                    <canvas id="myChart2" ></canvas>
+                                
+                                    </div>
+    
+                                    
+                                    </md-content>
+                                  </md-tab>
+                  </md-tabs>
+                </md-content>
+
+                <!-- tab area for User story-->
+                <md-content ng-show="detail.featureType=='story'">
+                    <md-tabs md-dynamic-height="" md-border-bottom="">
+                      <md-tab label="Status">
+                        <md-content class="md-padding">
+                          <h1 class="md-display-2">User Stories by Status</h1>
+                          <table class="table table-bordered table-striped">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="padding-left:5px">Team</th>
+                                        <th style="padding-left:5px">B</th>
+                                        <th style="padding-left:5px">D</th>
+                                        <th style="padding-left:5px">P</th>
+                                        <th style="padding-left:5px">C</th>
+                                        <th style="padding-left:5px">A</th>
+                                        <th style="padding-left:5px">Total</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            Total
+                                        </td>
+                                        <td>{{detail.totalObject.totalBacklog}}</td>
+                                        <td>{{detail.totalObject.totalDefined}}</td>
+                                        <td>{{detail.totalObject.totalProgress}}</td>
+                                        <td>{{detail.totalObject.totalCompleted}}</td>
+                                        <td>{{detail.totalObject.totalAccepted}}</td>
+                                        <td>{{detail.totalObject.totalBacklog+detail.totalObject.totalDefined+detail.totalObject.totalProgress+detail.totalObject.totalCompleted+detail.totalObject.totalAccepted}}</td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr ng-repeat="team in detail.feature" ng-hide="team.userStoryData.totalCount==0">
+                                        <td>{{team.team}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.userStoryData.backlogCount}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.userStoryData.definedCount}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.userStoryData.inProgressCount}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.userStoryData.completedCount}}</td>
+                                        <td style="padding-right:15px;padding-left:5px">{{team.userStoryData.acceptedCount}}</td>
+                                        <td style="padding-left:5px;" class="total-coloumn">{{team.userStoryData.totalCount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </md-content>
+                      </md-tab>
+                    <!--   <md-tab label="two">
+                        <md-content class="md-padding">
+                          <h1 class="md-display-2">Tab Two</h1>
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
+                          <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
+                          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                        </md-content>
+                      </md-tab>
+                      <md-tab label="three">
+                        <md-content class="md-padding">
+                          <h1 class="md-display-2">Tab Three</h1>
+                          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                        </md-content>
+                      </md-tab> -->
+                    </md-tabs>
+                  </md-content>
+              </div>
+            
+              <!--tab markup end-->
+        </div>
+    </div>
+</widget-modal>
+
+    

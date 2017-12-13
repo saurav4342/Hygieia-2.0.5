@@ -1,0 +1,67 @@
+
+<div class="monitor-view">
+
+    <div class="widget" ng-if="ctrl.services && ctrl.services.length">
+        <div class="widget-heading">
+            Splunk Errors (Past 1 hour)
+        </div>
+        <div class="widget-body">
+			<table class="table">
+				<tr>
+					<th>Pod</th>
+					<th>ErrorCount</th>
+					<th>uCIDs</th>
+				</tr>
+				<tr class="monitor-row clickable"
+				ng-repeat="service in ctrl.services" 
+				ng-click="ctrl.openStatusWindow(service)">
+				<td>{{service.pod}}</td>
+				<td>{{service.errorCount}}</td>
+				<td>{{service.ucids}}</td>
+			   </tr>
+			</table>		
+            
+			<div ng-init="ctrl.showChart()">
+			<canvas id="myChart" ></canvas>
+		    </div>
+            <script>
+
+</script>
+        </div>
+    </div>
+
+  
+
+    <p class="text-center" ng-if="!ctrl.services.length && !ctrl.dependencies.length">
+        No services configured
+    </p>
+</div>
+
+<!--A monitor modal used for the status popup-->
+
+<script type="text/ng-template" id="monitorStatus.html">
+    <widget-modal widget-modal-title="Status">
+        
+                <label class="control-label">{{ctrl.service.pod}} : {{ctrl.service.app}}</label>
+                <div class="row">
+				<div class="col-md-2">
+				<p><b>SYSCODES</b></p>
+		         <ul class="list-unstyled">
+				 <li ng-repeat="sys in ctrl.service.sysCodes">{{sys}}</li>
+				 </ul>
+				</div>
+				<div class="col-md-2">
+				<p><b>Unique CUSTIDs</b></p>
+				<ul  class="list-unstyled">
+				<li ng-repeat="custid in ctrl.service.custids">{{custid}}</li></ul>
+				
+				</div>
+				<div class="col-md-6">
+				<p><b>Unique Error Messages</b></p>
+				<ul >
+				<li ng-repeat="errorMessage in ctrl.service.errorMessages"><p>{{errorMessage}}</p></li>
+				</ul>
+				</div>
+				</div>
+    </widget-modal>
+</script>

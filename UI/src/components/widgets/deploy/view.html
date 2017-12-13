@@ -1,0 +1,41 @@
+<div class="deploy-view">
+    <table class="table">
+        <thead>
+        <tr class="story-summary-type" style="font-weight:800;font-size:0.8em;">
+            <td></td>
+            <!--<td><b><u>Status</u></b></td>-->
+            <td>POD</td>
+            <td style="text-align:center;">LASTDEPLOYED</td>
+            <td style="text-align:center;">SERVERS</td>
+            <td style="text-align:center;">STATUS</td>
+        </tr>
+        </thead>
+        
+        <tr class="dash-row clickable" ng-repeat="environment in deployView.environments" ng-show="environment.name!='WFNDIT04'" ng-click="deployView.showDetail(environment)" >
+          
+           <!-- <td>
+                <span
+                        dash-status="{{environment.failedComponents > 0 ? 
+                        	(environment.ignoreFailure? deployView.statuses.IGNORE : deployView.statuses.FAIL) : deployView.statuses.PASS}}"
+                        dash-status-fail-text=""
+                        dash-status-ignore-text="{{environment.failedComponents}}"></span>
+            </td>-->
+            <td class="environment-name" style="font-size:15px;">
+                {{environment.name}}
+            </td>
+            <td class="text-standard-date" style="text-align:center;">
+                {{environment.units[0].lastUpdated | fromNow}}
+            </td>
+            <td class="server-count" style="text-align:center;" >
+                {{environment.units[0].serverCount}}
+                
+            </td>
+            <td class="text-center" style="text-align:center;">
+                <span
+                        dash-status="{{environment.units[0].ansibleComponentStatus === false ? deployView.statuses.FAIL : deployView.statuses.PASS}}"
+                        dash-status-fail-text=""
+                        dash-status-ignore-text="{{environment.failedComponents}}"></span>
+            </td>
+        </tr>
+    </table>
+</div>
